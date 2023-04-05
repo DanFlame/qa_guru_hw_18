@@ -14,6 +14,7 @@ browser.config.base_url = WEB_URL_DEMOSHOP
 
 
 def test_login_successful():
+
     with allure.step("Open login page"):
         browser.open("/login")
 
@@ -26,18 +27,7 @@ def test_login_successful():
 
 
 def test_login_through_api(demoshop):
-    response = demoshop.post(
-        url="/login",
-        json={
-            "Email": f'{EMAIL_DEMOSHOP}',
-            "Password": f'{PASSWORD_DEMOSHOP}',
-            "RememberMe": True
-        },
-        allow_redirects=False
-    )
-    authorization_cookie = response.cookies.get("NOPCOMMERCE.AUTH")
-    browser.open("/Themes/DefaultClean/Content/Image/logo.png")
-    browser.driver.add_cookie({"name": "NOPCOMMERCE.AUTH", "value": authorization_cookie})
+
     browser.open("")
 
     with allure.step("Verify successful authorization"):
@@ -45,18 +35,6 @@ def test_login_through_api(demoshop):
 
 
 def test_add_product_to_cart(demoshop):
-    response = demoshop.post(
-        url="/login",
-        json={
-            "Email": f'{EMAIL_DEMOSHOP}',
-            "Password": f'{PASSWORD_DEMOSHOP}',
-            "RememberMe": True
-        },
-        allow_redirects=False
-    )
-    authorization_cookie = response.cookies.get("NOPCOMMERCE.AUTH")
-    browser.open("/books")
-    browser.driver.add_cookie({"name": "NOPCOMMERCE.AUTH", "value": authorization_cookie})
 
     with allure.step("Add product to cart"):
         demoshop.post(url="/addproducttocart/catalog/13/1/1")
@@ -69,18 +47,6 @@ def test_add_product_to_cart(demoshop):
 
 
 def test_add_product_to_wishlist(demoshop):
-    response = demoshop.post(
-        url="/login",
-        json={
-            "Email": f'{EMAIL_DEMOSHOP}',
-            "Password": f'{PASSWORD_DEMOSHOP}',
-            "RememberMe": True
-        },
-        allow_redirects=False
-    )
-    authorization_cookie = response.cookies.get("NOPCOMMERCE.AUTH")
-    browser.open("/album-3")
-    browser.driver.add_cookie({"name": "NOPCOMMERCE.AUTH", "value": authorization_cookie})
 
     with allure.step("Add product to wishlist"):
         demoshop.post(url="/addproducttocart/details/53/2")
@@ -93,18 +59,6 @@ def test_add_product_to_wishlist(demoshop):
 
 
 def test_remove_product_from_wishlist(demoshop):
-    response = demoshop.post(
-        url="/login",
-        json={
-            "Email": f'{EMAIL_DEMOSHOP}',
-            "Password": f'{PASSWORD_DEMOSHOP}',
-            "RememberMe": True
-        },
-        allow_redirects=False
-    )
-    authorization_cookie = response.cookies.get("NOPCOMMERCE.AUTH")
-    browser.open("/album-3")
-    browser.driver.add_cookie({"name": "NOPCOMMERCE.AUTH", "value": authorization_cookie})
 
     with allure.step("Add product to wishlist"):
         demoshop.post(url="/addproducttocart/details/53/2")
@@ -125,18 +79,6 @@ def test_remove_product_from_wishlist(demoshop):
 
 
 def test_remove_product_from_cart(demoshop):
-    response = demoshop.post(
-        url="/login",
-        json={
-            "Email": f'{EMAIL_DEMOSHOP}',
-            "Password": f'{PASSWORD_DEMOSHOP}',
-            "RememberMe": True
-        },
-        allow_redirects=False
-    )
-    authorization_cookie = response.cookies.get("NOPCOMMERCE.AUTH")
-    browser.open("/books")
-    browser.driver.add_cookie({"name": "NOPCOMMERCE.AUTH", "value": authorization_cookie})
 
     with allure.step("Add product to cart"):
         demoshop.post(url="/addproducttocart/catalog/13/1/1")
