@@ -6,11 +6,11 @@ from selene.support.shared import browser
 
 
 load_dotenv()
-EMAIL = os.getenv("EMAIL")
-PASSWORD = os.getenv("PASSWORD")
-API_URL = os.getenv("API_URL_DEMOSHOP")
-WEB_URL = os.getenv("WEB_URL_DEMOSHOP")
-browser.config.base_url = WEB_URL
+EMAIL_DEMOSHOP = os.getenv("EMAIL")
+PASSWORD_DEMOSHOP = os.getenv("PASSWORD")
+API_URL_DEMOSHOP = os.getenv("API_URL_DEMOSHOP")
+WEB_URL_DEMOSHOP = os.getenv("WEB_URL_DEMOSHOP")
+browser.config.base_url = WEB_URL_DEMOSHOP
 
 
 def test_login_successful():
@@ -18,19 +18,19 @@ def test_login_successful():
         browser.open("/login")
 
     with allure.step("Fill login form"):
-        browser.element("#Email").send_keys(EMAIL)
-        browser.element("#Password").send_keys(PASSWORD).press_enter()
+        browser.element("#Email").send_keys(EMAIL_DEMOSHOP)
+        browser.element("#Password").send_keys(PASSWORD_DEMOSHOP).press_enter()
 
     with allure.step("Verify successful authorization"):
-        browser.element(".account").should(have.text(EMAIL))
+        browser.element(".account").should(have.text(EMAIL_DEMOSHOP))
 
 
 def test_login_through_api(demoshop):
     response = demoshop.post(
         url="/login",
         json={
-            "Email": f'{EMAIL}',
-            "Password": f'{PASSWORD}',
+            "Email": f'{EMAIL_DEMOSHOP}',
+            "Password": f'{PASSWORD_DEMOSHOP}',
             "RememberMe": True
         },
         allow_redirects=False
@@ -41,15 +41,15 @@ def test_login_through_api(demoshop):
     browser.open("")
 
     with allure.step("Verify successful authorization"):
-        browser.element(".account").should(have.text(f'{EMAIL}'))
+        browser.element(".account").should(have.text(f'{EMAIL_DEMOSHOP}'))
 
 
 def test_add_product_to_cart(demoshop):
     response = demoshop.post(
         url="/login",
         json={
-            "Email": f'{EMAIL}',
-            "Password": f'{PASSWORD}',
+            "Email": f'{EMAIL_DEMOSHOP}',
+            "Password": f'{PASSWORD_DEMOSHOP}',
             "RememberMe": True
         },
         allow_redirects=False
@@ -72,8 +72,8 @@ def test_add_product_to_wishlist(demoshop):
     response = demoshop.post(
         url="/login",
         json={
-            "Email": f'{EMAIL}',
-            "Password": f'{PASSWORD}',
+            "Email": f'{EMAIL_DEMOSHOP}',
+            "Password": f'{PASSWORD_DEMOSHOP}',
             "RememberMe": True
         },
         allow_redirects=False
@@ -96,8 +96,8 @@ def test_remove_product_from_wishlist(demoshop):
     response = demoshop.post(
         url="/login",
         json={
-            "Email": f'{EMAIL}',
-            "Password": f'{PASSWORD}',
+            "Email": f'{EMAIL_DEMOSHOP}',
+            "Password": f'{PASSWORD_DEMOSHOP}',
             "RememberMe": True
         },
         allow_redirects=False
@@ -128,8 +128,8 @@ def test_remove_product_from_cart(demoshop):
     response = demoshop.post(
         url="/login",
         json={
-            "Email": f'{EMAIL}',
-            "Password": f'{PASSWORD}',
+            "Email": f'{EMAIL_DEMOSHOP}',
+            "Password": f'{PASSWORD_DEMOSHOP}',
             "RememberMe": True
         },
         allow_redirects=False
@@ -154,4 +154,3 @@ def test_remove_product_from_cart(demoshop):
     with allure.step("Check removed products"):
         browser.open("/cart")
         browser.element('.order-summary-content').should(have.text('Your Shopping Cart is empty!'))
-
